@@ -6,33 +6,60 @@ public class Yandere : MonoBehaviour
     [Header("components")]
     public CharacterController controller;
     public Animation playerAnimationComponent;
+    public RagdollLimbDrag limbDragger;
     [Space]
     [Header("runtime values")]
-	public bool canMove = true;
-	public bool running;
+    public bool canMove = true;
+    public bool canRun = true;
+    public bool running;
     public bool holdingWeapon;
     public bool isKilling;
     public GenericWeaponScript currentItem;
-	[Space]
+    public StudentScript currentCorpse;
+    [Space]
     [Header("speed settings")]
-	public float WalkSpeed = 1f;
-	public float RunSpeed = 5f;
-	[Space]
+    public float WalkSpeed = 1f;
+    public float RunSpeed = 5f;
+    [Space]
     [Header("animation settings")]
-	public string IdleAnimation = "f02_idleShort_00";
-	public string WalkAnimation = "f02_newWalk_00";
-	public string SprintAnimation = "f02_newSprint_00";
-	[Space]
+    public string IdleAnimation = "f02_idleShort_00";
+    private string defaultIdle;
+    public string WalkAnimation = "f02_newWalk_00";
+    private string defaultWalk;
+    public string SprintAnimation = "f02_newSprint_00";
+    private string defaultSprint;
+    [Space]
     [Header("other values")]
-	public Camera mainCamera;
-	private Vector3 targetDirection;
-	private Quaternion targetRotation;
+    public Camera mainCamera;
+    private Vector3 targetDirection;
+    private Quaternion targetRotation;
     [Space]
     [Header("bones")]
     public Transform Hips;
     public Transform Head;
     public Transform Hand;
 
+    private void Start()
+    {
+        defaultIdle = IdleAnimation;
+        defaultWalk = WalkAnimation;
+        defaultSprint = SprintAnimation;
+    }
+    public void DragBody(StudentScript corpse)
+    {
+        currentCorpse = corpse;
+        IdleAnimation = "f02_dragIdle_00";
+        WalkAnimation = "f02_dragWalk_00";
+        canRun = false;
+    }
+
+    public void DropBody()
+    {
+        currentCorpse = null;
+        canRun = true;
+        IdleAnimation = defaultIdle;
+        WalkAnimation = defaultWalk;
+    }
 
 	public void Update()
 	{
@@ -54,7 +81,7 @@ public class Yandere : MonoBehaviour
 		{
 			base.transform.position = Vector3.zero;
 		}
-		running = canMove && Input.GetKey(KeyCode.LeftShift);
+		running = canRun && canMove && Input.GetKey(KeyCode.LeftShift);
 		if (canMove)
 		{
 			controller.Move(Physics.gravity * 0.1f);
@@ -90,7 +117,8 @@ public class Yandere : MonoBehaviour
 			{
 				playerAnimationComponent.CrossFade(IdleAnimation);
 			}
-		}
+
+        }
 		else
 		{
 			playerAnimationComponent.CrossFade(IdleAnimation);

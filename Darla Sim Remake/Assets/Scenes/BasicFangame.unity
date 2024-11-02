@@ -7546,6 +7546,8 @@ Animation:
   - {fileID: 7400000, guid: e4d5351801f19ca4e9d9710493b0e145, type: 2}
   - {fileID: 7400000, guid: 0287539257bc54145b7dfbee53ba7d70, type: 2}
   - {fileID: 7400000, guid: 21c7380b6f474de4bad3ad4c11486047, type: 2}
+  - {fileID: 7400000, guid: 953e3cc87f20a1d4a965975f6dbbae0b, type: 2}
+  - {fileID: 7400000, guid: 6db7d13292518094c9e3b35c17e5906c, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -7564,11 +7566,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 490384482}
   playerAnimationComponent: {fileID: 490384480}
+  limbDragger: {fileID: 490416773}
   canMove: 1
+  canRun: 1
   running: 0
   holdingWeapon: 0
   isKilling: 0
   currentItem: {fileID: 0}
+  currentCorpse: {fileID: 0}
   WalkSpeed: 1
   RunSpeed: 5
   IdleAnimation: f02_idleShort_00
@@ -7641,6 +7646,7 @@ GameObject:
   - component: {fileID: 490384482}
   - component: {fileID: 490384480}
   - component: {fileID: 490384481}
+  - component: {fileID: 490416773}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7648,6 +7654,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &490416773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490416772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35da5ed7632f35f438f6250df725a613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragStrength: 500
+  followSpeed: 5
 --- !u!1 &490416774
 GameObject:
   m_ObjectHideFlags: 0

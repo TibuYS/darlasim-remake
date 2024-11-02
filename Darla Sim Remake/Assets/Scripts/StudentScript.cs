@@ -31,6 +31,8 @@ public class StudentScript : MonoBehaviour
 
     private UnityEvent talkEvent;
     private UnityEvent killEvent;
+    private UnityEvent dragEvent;
+    private UnityEvent dropEvent;
     
     void Start()
     {
@@ -40,6 +42,10 @@ public class StudentScript : MonoBehaviour
         talkEvent.AddListener(Talk);
         killEvent = new UnityEvent();
         killEvent.AddListener(Kill);
+        dragEvent = new UnityEvent();
+        dragEvent.AddListener(Drag);
+        dropEvent = new UnityEvent();
+        dropEvent.AddListener(Drop);
     }
 
     private void Update()
@@ -110,32 +116,6 @@ public class StudentScript : MonoBehaviour
         }
     }
 
-    public void BecomeRagdoll(bool becomeRagdoll)
-    {
-        studentAnimation.enabled = !becomeRagdoll;
-        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var rb in rigidbodies)
-        {
-            rb.isKinematic = !becomeRagdoll;
-        }
-        foreach (var col in colliders)
-        {
-            if (col.gameObject.name != gameObject.name)
-            {
-                col.enabled = becomeRagdoll;
-            }
-        }
-        int objectLayer = gameObject.layer;
-        for (int i = 0; i < 32; i++)
-        {
-            if (i != objectLayer)
-            {
-                Physics.IgnoreLayerCollision(objectLayer, i, !becomeRagdoll);
-            }
-        }
-    }
-
     string attackAnimation(AttackType attackType, Weapon weaponType)
     {
         string animation = "";
@@ -168,7 +148,7 @@ public class StudentScript : MonoBehaviour
         transform.parent = null;
         BecomeRagdoll(true);
         ShowPrompt(true);
-        UpdateStudentPrompt("Drag", KeyCode.Q, null);
+        UpdateStudentPrompt("Drag", KeyCode.Q, dragEvent);
     }
 
     IEnumerator KillRoutine(AttackType attackType)
@@ -214,6 +194,54 @@ public class StudentScript : MonoBehaviour
         }
 
         yield return null;
+    }
+    #endregion
+
+    #region everything related to ragdolls
+    public void BecomeRagdoll(bool becomeRagdoll)
+    {
+        studentAnimation.enabled = !becomeRagdoll;
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (var rb in rigidbodies)
+        {
+            rb.isKinematic = !becomeRagdoll;
+        }
+        foreach (var col in colliders)
+        {
+            if (col.gameObject.name != gameObject.name)
+            {
+                col.enabled = becomeRagdoll;
+            }
+        }
+        int objectLayer = gameObject.layer;
+        for (int i = 0; i < 32; i++)
+        {
+            if (i != objectLayer)
+            {
+                Physics.IgnoreLayerCollision(objectLayer, i, !becomeRagdoll);
+            }
+        }
+    }
+
+    public void Drag()
+    {
+        if (GameGlobals.instance.Player.currentCorpse != null) return;
+        UpdateStudentPrompt("Drop", KeyCode.Q, dropEvent);
+        GameGlobals.instance.Player.DragBody(this);
+        string limbPath = studentData.studentGender == Gender.Female ? "PelvisRoot/Hips/Spine/Spine1/Spine2/Spine3/RightShoulder/RightArm/RightArmRoll/RightForeArm" : "";
+        Rigidbody limbToGrab = transform.Find(limbPath).gameObject.GetComponent<Rigidbody>();
+        BecomeRagdoll(false);
+        if(limbToGrab != null) GameGlobals.instance.Player.limbDragger.GrabLimb(limbToGrab, gameObject);
+    }
+
+    public void Drop()
+    {
+        if (GameGlobals.instance.Player.currentCorpse != this|| GameGlobals.instance.Player.currentCorpse == null) return;
+        BecomeRagdoll(true);
+        GameGlobals.instance.Player.DropBody();
+        GameGlobals.instance.Player.limbDragger.ReleaseLimb();
+        UpdateStudentPrompt("Drag", KeyCode.Q, dragEvent);
     }
     #endregion
 }
