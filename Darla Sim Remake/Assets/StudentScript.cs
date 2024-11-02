@@ -34,6 +34,7 @@ public class StudentScript : MonoBehaviour
     void Start()
     {
         ResetData(); //until we have more students
+        BecomeRagdoll(false); //so she doesnt fall lol
         talkEvent = new UnityEvent();
         talkEvent.AddListener(Talk);
         killEvent = new UnityEvent();
@@ -74,6 +75,32 @@ public class StudentScript : MonoBehaviour
         }
     }
 
+    public void BecomeRagdoll(bool becomeRagdoll)
+    {
+        studentAnimation.enabled = !becomeRagdoll;
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (var rb in rigidbodies)
+        {
+            rb.isKinematic = !becomeRagdoll;
+        }
+        foreach (var col in colliders)
+        {
+            if (col.gameObject.name != gameObject.name)
+            {
+                col.enabled = becomeRagdoll;
+            }
+        }
+        int objectLayer = gameObject.layer;
+        for (int i = 0; i < 32; i++)
+        {
+            if (i != objectLayer)
+            {
+                Physics.IgnoreLayerCollision(objectLayer, i, !becomeRagdoll);
+            }
+        }
+    }
+
     string attackAnimation(AttackType attackType, Weapon weaponType)
     {
         string animation = "";
@@ -94,11 +121,18 @@ public class StudentScript : MonoBehaviour
 
         return animation;
     }
+
     IEnumerator KillRoutine(AttackType attackType)
     {
         switch (attackType)
         {
-            
+            case AttackType.Front:
+
+                break;
+
+            case AttackType.Back:
+
+                break;
         }
 
         yield return null;

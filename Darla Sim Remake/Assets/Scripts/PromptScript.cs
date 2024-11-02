@@ -26,9 +26,9 @@ public class PromptScript : MonoBehaviour
 
     private void Start()
     {
-        if (!Pivot) Pivot = transform;
         player = GameGlobals.instance.Player;
         manager = GameGlobals.instance.PromptManager;
+        if (!Pivot) Pivot = transform;
         UpdateData();
     }
 
@@ -86,7 +86,7 @@ public class PromptScript : MonoBehaviour
             StopBeingPressed();
         }
 
-        if (Input.GetKey(keyCode)) // Check for the KeyCode directly
+        if (Input.GetKey(keyCode)) 
         {
             Pressed = RemainingTimer <= 0f;
             RemainingTimer -= Time.deltaTime;
@@ -98,7 +98,7 @@ public class PromptScript : MonoBehaviour
         }
     }
 
-    private int GetButtonIndex() // Helper function to get the index from the manager
+    private int GetButtonIndex()
     {
         for (int i = 0; i < manager.buttonConfigs.Length; i++)
         {
