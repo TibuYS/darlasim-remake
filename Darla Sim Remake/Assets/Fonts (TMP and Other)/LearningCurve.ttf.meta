@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9e7009dda55149c4a8c3a480b2c55bc2
+timeCreated: 1651858943
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Learning Curve
+  fontNames:
+  - Learning Curve
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

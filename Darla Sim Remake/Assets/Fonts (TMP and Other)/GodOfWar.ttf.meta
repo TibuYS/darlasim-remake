@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1e2d0da6e06225d489e7b0417e71b360
+timeCreated: 1651858942
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: GodOfWar
+  fontNames:
+  - GodOfWar
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

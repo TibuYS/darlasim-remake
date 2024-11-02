@@ -21,14 +21,33 @@ public enum Action
     ChangingShoes
 }
 
+[System.Serializable]
+public class DestinationSpot
+{
+    public string destinationName = "Unnamed Destination";
+    public Phase destinationPhase;
+    public Transform destinationLocation;
+    public string destinationAnimation;
+}
+
 public class StudentScript : MonoBehaviour
 {
+    [Header("Edit in inspector")]
+    [Range(1.2f, 5)]public float pathfindingSpeed = 1.2f;
+    public Transform studentLocker;
+    public List<DestinationSpot> destinationSpots = new List<DestinationSpot>();
+    [Space]
     [Header("Components")]
     public Animation studentAnimation;
     public NavMeshAgent studentAgent;
     public PromptScript studentPrompt;
     public StudentDataScriptable studentData;
-
+    [Space]
+    [Header("Runtime values")]
+    public bool changingShoes = false;
+    public bool changedShoes = false;
+    private Transform shoeChangeSpot;
+    public DestinationSpot currentDestination;
     private UnityEvent talkEvent;
     private UnityEvent killEvent;
     private UnityEvent dragEvent;
@@ -46,11 +65,101 @@ public class StudentScript : MonoBehaviour
         dragEvent.AddListener(Drag);
         dropEvent = new UnityEvent();
         dropEvent.AddListener(Drop);
+        GameObject spot = new GameObject();
+        studentAgent.speed = pathfindingSpeed;
+        shoeChangeSpot = spot.transform;
+        shoeChangeSpot.transform.localPosition = new Vector3(studentLocker.transform.localPosition.x + 0.45f, studentLocker.transform.localPosition.y, studentLocker.transform.localPosition.z);
+        shoeChangeSpot.transform.localEulerAngles = new Vector3(studentLocker.transform.localEulerAngles.x, -studentLocker.transform.localEulerAngles.y, studentLocker.transform.localPosition.z);
+        DestinationSpot newSpot = new DestinationSpot();
+        newSpot.destinationLocation = shoeChangeSpot;
+        newSpot.destinationName = gameObject.name + " shoe changing spot";
+        shoeChangeSpot.gameObject.name = newSpot.destinationName;
+        SetDestination(newSpot);
     }
+
+    #region related to pathfinding
+    public void SetDestination(DestinationSpot newDestinationSpot)
+    {
+        currentDestination = newDestinationSpot;
+        studentAgent.SetDestination(newDestinationSpot.destinationLocation.localPosition);
+    }
+
+    public void AdjustToDayPhase()
+    {
+        if (!changedShoes) { return; }
+        foreach(DestinationSpot newSpot in destinationSpots)
+        {
+            if(newSpot.destinationPhase == GameGlobals.instance.TimeManager.CurrentPhase)
+            {
+                SetDestination(newSpot);
+            }
+        }
+    }
+
+    public void Stop(bool shouldStop, bool adjustToCurrentDestination = false)
+    {
+        studentAgent.isStopped = shouldStop;
+        if (adjustToCurrentDestination && currentDestination != null) transform.DOLocalMove(currentDestination.destinationLocation.localPosition, 0.2f);
+        if (adjustToCurrentDestination && currentDestination != null) transform.DOLocalRotate(currentDestination.destinationLocation.localEulerAngles, 0.2f);
+    }
+
+    public void PlayDestinationAnimation()
+    {
+        if(currentDestination == null) { return; }
+        string animToPlay = currentDestination.destinationAnimation == "" ? studentData.IdleAnimation : currentDestination.destinationAnimation;
+        studentAnimation.CrossFade(animToPlay);
+    }
+    #endregion
+
 
     private void Update()
     {
         if (studentData.isDead) return;
+        UpdatePathfinding();
+        UpdatePrompt();  
+    }
+
+    IEnumerator changeShoes()
+    {
+        Stop(true, true);
+        changingShoes = true;
+        string shoeChangeAnim = studentData.studentGender == Gender.Female ? "f02_shoeLocker5_00" : "shoeLocker5_00";
+        studentAnimation.Play(shoeChangeAnim);
+        yield return new WaitForSeconds(studentAnimation[shoeChangeAnim].length);
+        changingShoes = false;
+        changedShoes = true;
+        Stop(false);
+        AdjustToDayPhase();
+    }
+
+    public void UpdatePathfinding()
+    {
+        if (!studentAgent.enabled) return;
+        if (studentAgent.isStopped) return;
+
+        if (studentAgent.remainingDistance < 0.1)
+        {
+            if (!studentAgent.isStopped)
+            {
+                Stop(true, true);
+                PlayDestinationAnimation();
+                if (!changedShoes && !changedShoes) StartCoroutine(changeShoes());
+            }
+        }
+        else
+        {
+            if (studentAgent.speed == 1.2f)
+            {
+                studentAnimation.CrossFade(studentData.WalkAnimation);
+            }
+            else if (studentAgent.speed >= 3)
+            {
+                studentAnimation.CrossFade(studentData.SprintAnimation);
+            }
+        }
+    }
+    public void UpdatePrompt()
+    {
         if (GameGlobals.instance.Player.holdingWeapon)
         {
             UpdateStudentPrompt("Attack", KeyCode.F, killEvent);
@@ -102,6 +211,8 @@ public class StudentScript : MonoBehaviour
     public void Kill()
     {
         if (GameGlobals.instance.Player.isKilling) return; //alr in progress or alr in a killing state with another student ??
+        studentAnimation.Stop();
+        Stop(true);
         Vector3 playerDirection = (GameGlobals.instance.Player.transform.position - transform.position).normalized;
         Vector3 characterForward = transform.forward;
         float dotProduct = Vector3.Dot(playerDirection, characterForward);

@@ -15,6 +15,7 @@ public class BellScript : MonoBehaviour
 
     public IEnumerator bellRing()
     {
+        SoundManager.instance.PlaySound(SoundManager.instance.getClip("Ambiences"), 1, true, SoundManager.AudioGroup.SFX);
         SoundManager.instance.PlaySound(SoundManager.instance.getClip("Schoolbell"), 1, false, SoundManager.AudioGroup.SFX);
         yield return new WaitForSeconds(SoundManager.instance.getClip("Schoolbell").length);
         SoundManager.instance.PlaySound(SoundManager.instance.getClip("TemporarySchooldayTrack2"), 1, true, SoundManager.AudioGroup.Music);

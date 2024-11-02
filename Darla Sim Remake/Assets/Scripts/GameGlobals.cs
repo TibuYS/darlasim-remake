@@ -8,6 +8,7 @@ public class GameGlobals : MonoBehaviour
     public Yandere Player;
     public PromptManager PromptManager;
     public Camera mainCamera;
+    public TimeManager TimeManager;
 
     void Awake()
     {

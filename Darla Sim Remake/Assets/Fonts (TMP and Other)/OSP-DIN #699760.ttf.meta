@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ff74d7e025698f84e91a41727bcbccaf
+timeCreated: 1651858943
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: OSP-DIN
+  fontNames:
+  - OSP-DIN
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 446a1dbf53885cb4c871cb25f259924c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e16384361863e4fb18f4423661740e, type: 3}
   m_Name: Pahriti Ahmazin
   m_EditorClassIdentifier: 
-  isDead: 0
+  isDead: 1
   slowMotionKill: 1
   studentGender: 1
   IdleAnimation: f02_idleShort_00
   WalkAnimation: f02_newWalk_00
-  RunAnimation: f02_run_00
-  SprintAnimation: f02_sprint_00
+  RunAnimation: f02_newSprint_00
+  SprintAnimation: f02_newSprint_00
   LockerAnimation: f02_shoeLocker5_00
   DestinationAnimation: f02_idleShort_00
