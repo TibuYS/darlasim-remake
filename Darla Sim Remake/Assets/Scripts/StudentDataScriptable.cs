@@ -12,6 +12,7 @@ Female
 public class StudentDataScriptable : ScriptableObject
 {
     public bool isDead = false;
+    public bool slowMotionKill = false;
     public Gender studentGender = new Gender();
     public string IdleAnimation = "f02_idleShort_00";
     public string WalkAnimation = "f02_newWalk_00";

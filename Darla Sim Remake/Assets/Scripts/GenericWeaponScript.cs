@@ -8,26 +8,20 @@ public enum Weapon
 }
 public class GenericWeaponScript : MonoBehaviour
 {
-    [SerializeField] private string Weapon;
-    [SerializeField] private GameObject Player;
-    [SerializeField] private bool Heavy = false;
-    [SerializeField] private Transform thisTransform;
-    [SerializeField] private Vector3 WeaponRotation;
-    [SerializeField] private Vector3 WeaponPosition;
-    [SerializeField] private Rigidbody weaponRigidbody;
-    [SerializeField] private Collider weaponCollider;
-    [SerializeField] private bool weaponEquipped;
-    private PromptScript weaponPrompt;
-     
-    void Start()
-    {
-        //make the weapon and yanchan ignore collision. when rigidbodies touch eachother they "fly" away, we dont want that.
-       // Physics.IgnoreCollision(weaponCollider, Player.GetComponent<CapsuleCollider>());
-        Weapon = gameObject.name;
-        thisTransform = gameObject.transform;
-        weaponPrompt = GetComponent<PromptScript>();
-    }
-
+    [Header("Edit in inspector")]
+    [Tooltip("Choose this weapon from the list. If you can't see it, add it to the Weapon enum in GenericWeaponScript.")] public Weapon weaponType = new Weapon();
+    [Tooltip("Position when equipped in player's right hand")] public Vector3 WeaponPosition;
+    [Tooltip("Rotation when equipped in player's right hand")] public Vector3 WeaponRotation;
+    [Tooltip("Is this item a weapon?")] public bool isWeapon = true;
+    [Tooltip("Is this a heavy weapon? If it is, it can't be hidden.")] public bool Heavy = false;
+    [Tooltip("The sound this item will play when the player picks it up.")]public AudioClip equipSound;
+    [Header("Components")]
+    public Rigidbody weaponRigidbody;
+    public Collider weaponCollider;
+    public PromptScript weaponPrompt;
+    [Header("Runtime values")]
+    public bool weaponEquipped;
+    
     private void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Q) && weaponEquipped)
@@ -38,11 +32,14 @@ public class GenericWeaponScript : MonoBehaviour
 
     public void PickUp()
     {
+        SoundManager.instance.PlaySound(equipSound, 1, false, SoundManager.AudioGroup.SFX);
         weaponPrompt.enabled = false;
         weaponCollider.isTrigger = true;
         weaponRigidbody.isKinematic = true;
         weaponRigidbody.useGravity = false;
         this.gameObject.transform.parent = GameGlobals.instance.Player.Hand;
+        if(isWeapon) GameGlobals.instance.Player.holdingWeapon = true;
+        GameGlobals.instance.Player.currentItem = this;
         this.transform.localPosition = WeaponPosition;
         this.transform.localEulerAngles = WeaponRotation;
         weaponEquipped = true;
@@ -50,6 +47,8 @@ public class GenericWeaponScript : MonoBehaviour
 
     public void Drop()
     {
+        if (isWeapon) GameGlobals.instance.Player.holdingWeapon = false;
+        GameGlobals.instance.Player.currentItem = null;
         weaponPrompt.enabled = true;
         weaponEquipped = false;
         weaponCollider.isTrigger = false;

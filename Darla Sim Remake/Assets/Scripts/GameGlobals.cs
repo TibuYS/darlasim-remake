@@ -8,19 +8,32 @@ public class GameGlobals : MonoBehaviour
     public Yandere Player;
     public PromptManager PromptManager;
     public Camera mainCamera;
-    [Header("Developer Tools")]
-    [Range(0, 100)] public float timeSpeed;
 
     void Awake()
     {
         instance = this;
     }
-    private void Update()
+
+    public void Smooth_ChangeTimeSpeed(float target, float dur)
     {
-        if(Time.timeScale != timeSpeed)
+        StartCoroutine(ChangeTimeSpeed(target, dur));
+    }
+
+    public IEnumerator ChangeTimeSpeed(float targetTimeSpeed, float duration)
+    {
+        float startTimeScale = Time.timeScale;
+        float elapsedTime = 0f;
+        SoundManager.instance.GatherCurrentlyPlaying();
+
+        while (elapsedTime < duration)
         {
-            Time.timeScale = timeSpeed;
+            elapsedTime += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsedTime / duration);
+            Time.timeScale = Mathf.Lerp(startTimeScale, targetTimeSpeed, progress);
+            SoundManager.instance.ChangeAllPitch(Time.timeScale);
+            yield return null;
         }
+        Time.timeScale = targetTimeSpeed;
     }
 
 }

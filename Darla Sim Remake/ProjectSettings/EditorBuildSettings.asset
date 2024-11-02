@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BasicFangame.unity
+    guid: 6dbb32aeb06bd4f439d470e4349229bf
   m_configObjects: {}

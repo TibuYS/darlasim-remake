@@ -5,12 +5,14 @@ public class Yandere : MonoBehaviour
 {
     [Header("components")]
     public CharacterController controller;
-    public Animation animations;
+    public Animation playerAnimationComponent;
     [Space]
     [Header("runtime values")]
 	public bool canMove = true;
 	public bool running;
     public bool holdingWeapon;
+    public bool isKilling;
+    public GenericWeaponScript currentItem;
 	[Space]
     [Header("speed settings")]
 	public float WalkSpeed = 1f;
@@ -81,17 +83,17 @@ public class Yandere : MonoBehaviour
 			}
 			if (axisRaw != 0f || axisRaw2 != 0f)
 			{
-				animations.CrossFade((!running) ? WalkAnimation : SprintAnimation);
+				playerAnimationComponent.CrossFade((!running) ? WalkAnimation : SprintAnimation);
 				controller.Move(base.transform.forward * Time.deltaTime * ((!running) ? WalkSpeed : RunSpeed));
 			}
 			else
 			{
-				animations.CrossFade(IdleAnimation);
+				playerAnimationComponent.CrossFade(IdleAnimation);
 			}
 		}
 		else
 		{
-			animations.CrossFade(IdleAnimation);
+			playerAnimationComponent.CrossFade(IdleAnimation);
 		}
 	}
 }

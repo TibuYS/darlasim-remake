@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class SoundManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SoundManager : MonoBehaviour
     public AudioMixerGroup SFXGroup;
     public AudioMixerGroup voiceLinesGroup;
     public List<AudioClip> clips = new List<AudioClip>();
+    public List<AudioSource> currentlyPlaying = new List<AudioSource>();
 
 
     public static SoundManager instance;
@@ -20,6 +22,41 @@ public class SoundManager : MonoBehaviour
         Music,
         SFX,
         VoiceLines
+    }
+
+
+    public void GatherCurrentlyPlaying()
+    {
+        currentlyPlaying.Clear();
+        AudioSource[] allAudioSources = GameObject.FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                currentlyPlaying.Add(audioSource);
+            }
+        }
+    }
+
+    public void ChangeAllPitch(float newPitch)
+    {
+        for (int i = currentlyPlaying.Count - 1; i >= 0; i--)
+        {
+            AudioSource source = currentlyPlaying[i];
+            if (source != null)
+            {
+                source.pitch = newPitch;
+            }
+            else
+            {
+                currentlyPlaying.RemoveAt(i);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        
     }
 
     public AudioClip getClip(string name)
@@ -35,10 +72,9 @@ public class SoundManager : MonoBehaviour
         return null;
     }
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
-        PlaySound(getClip("TemporarySchooldayMusic"), 1, true, AudioGroup.Music);
     }
 
     /// <summary>
@@ -84,6 +120,7 @@ public class SoundManager : MonoBehaviour
         sourceToPlayFrom.clip = randomAudio;
         sourceToPlayFrom.gameObject.name = "Now Playing: " + randomAudio.name;
         sourceToPlayFrom.Play();
+        currentlyPlaying.Add(sourceToPlayFrom);
     }
 
     /// <summary>
@@ -124,6 +161,7 @@ public class SoundManager : MonoBehaviour
 
         audioObject.transform.position = location;
         sourceToPlayFrom.Play();
+        currentlyPlaying.Add(sourceToPlayFrom);
 
         if (!shouldLoop)
         {
@@ -163,10 +201,12 @@ public class SoundManager : MonoBehaviour
         }
 
         sourceToPlayFrom.Play();
+        currentlyPlaying.Add(sourceToPlayFrom);
 
         if (!shouldLoop)
         {
             Destroy(audioObject, audio.length);
         }
     }
+
 }
