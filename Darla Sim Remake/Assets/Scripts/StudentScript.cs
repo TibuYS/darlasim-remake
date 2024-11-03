@@ -114,6 +114,7 @@ public class StudentScript : MonoBehaviour
 
     private void Update()
     {
+
         if (studentData.isDead) return;
         UpdatePathfinding();
         UpdatePrompt();  
@@ -211,6 +212,7 @@ public class StudentScript : MonoBehaviour
     public void Kill()
     {
         if (GameGlobals.instance.Player.isKilling) return; //alr in progress or alr in a killing state with another student ??
+        StopAllCoroutines();
         GameGlobals.instance.Player.isKilling = true;
         studentAnimation.Stop();
         Stop(true);
@@ -228,6 +230,7 @@ public class StudentScript : MonoBehaviour
             StartCoroutine(KillRoutine(AttackType.Back));
         }
     }
+
 
     string attackAnimation(AttackType attackType, Weapon weaponType)
     {

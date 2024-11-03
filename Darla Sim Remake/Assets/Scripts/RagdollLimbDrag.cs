@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RagdollLimbDrag : MonoBehaviour
@@ -12,6 +13,14 @@ public class RagdollLimbDrag : MonoBehaviour
     {
         playerHand = GameGlobals.instance.Player.Hand; // Reference to the player's hand
         ragdollRigidbodies = GetComponentsInChildren<Rigidbody>(); // Gather all rigidbodies
+    }
+
+    private void Update()
+    {
+        if (isDragging)
+        {
+            MoveLimbToHand(grabbedLimb);
+        }
     }
 
     // Function to grab a specific limb
@@ -33,16 +42,7 @@ public class RagdollLimbDrag : MonoBehaviour
             grabbedLimb.isKinematic = false; // Reset kinematic state on release
             grabbedLimb = null; // Clear the reference
             isDragging = false; // Reset dragging state
-            SetRagdollKinematic(true); // Optionally set all rigidbodies to kinematic again if desired
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (isDragging && grabbedLimb != null)
-        {
-            // Move the grabbed limb towards the player's hand
-            MoveLimbToHand(grabbedLimb);
+            SetRagdollKinematic(true); // Set all rigidbodies to kinematic again if desired
         }
     }
 
