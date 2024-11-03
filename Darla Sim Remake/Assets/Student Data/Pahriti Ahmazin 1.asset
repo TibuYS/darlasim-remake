@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e16384361863e4fb18f4423661740e, type: 3}
+  m_Name: Pahriti Ahmazin 1
+  m_EditorClassIdentifier: 
+  isDead: 0
+  slowMotionKill: 0
+  studentGender: 1
+  IdleAnimation: f02_idleShort_00
+  WalkAnimation: f02_newWalk_00
+  RunAnimation: f02_newSprint_00
+  SprintAnimation: f02_newSprint_00
+  LockerAnimation: f02_shoeLocker5_00
+  DestinationAnimation: f02_idleShort_00

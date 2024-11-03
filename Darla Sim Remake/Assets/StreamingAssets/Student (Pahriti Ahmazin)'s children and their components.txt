@@ -1,0 +1,349 @@
+Children of Student (Pahriti Ahmazin) and their components:
+Child: f02
+    Component: Transform
+Child: f02_schoolwear_220_h
+    Component: Transform
+    Component: SkinnedMeshRenderer
+Child: PelvisRoot
+    Component: Transform
+Child: Hips
+    Component: Transform
+    Component: Rigidbody
+    Component: BoxCollider
+Child: Back_skart1
+    Component: Transform
+Child: Back_skart2
+    Component: Transform
+Child: Back_skart3
+    Component: Transform
+Child: Front_skart1
+    Component: Transform
+Child: Front_skart2
+    Component: Transform
+Child: Front_skart3
+    Component: Transform
+Child: Left_skart1
+    Component: Transform
+Child: Left_skart2
+    Component: Transform
+Child: Left_skart3
+    Component: Transform
+Child: LeftUpLeg
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: LeftHip_Helper
+    Component: Transform
+Child: LeftLeg
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: LeftFoot
+    Component: Transform
+Child: LeftToes
+    Component: Transform
+Child: LeftToesNull
+    Component: Transform
+Child: LeftLeg_Helper
+    Component: Transform
+Child: Right_skart1
+    Component: Transform
+Child: Right_skart2
+    Component: Transform
+Child: Right_skart3
+    Component: Transform
+Child: RightUpLeg
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: RightHip_Helper
+    Component: Transform
+Child: RightLeg
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: RightFoot
+    Component: Transform
+Child: RightToes
+    Component: Transform
+Child: RightToesNull
+    Component: Transform
+Child: RightLeg_Helper
+    Component: Transform
+Child: Spine
+    Component: Transform
+Child: Spine1
+    Component: Transform
+Child: Spine2
+    Component: Transform
+Child: Spine3
+    Component: Transform
+    Component: Rigidbody
+    Component: BoxCollider
+    Component: CharacterJoint
+Child: LeftBreast
+    Component: Transform
+Child: LeftNipple
+    Component: Transform
+Child: LeftShoulder
+    Component: Transform
+Child: LeftArm
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: LeftArmRoll
+    Component: Transform
+Child: LeftForeArm
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: LeftForeArm_Helper
+    Component: Transform
+Child: LeftForeArmRoll
+    Component: Transform
+Child: LeftHand
+    Component: Transform
+Child: LeftHandIndex1
+    Component: Transform
+Child: LeftHandIndex2
+    Component: Transform
+Child: LeftHandIndex3
+    Component: Transform
+Child: LeftHandIndexNull
+    Component: Transform
+Child: LeftHanditem_Null
+    Component: Transform
+Child: LeftHandMiddle1
+    Component: Transform
+Child: LeftHandMiddle2
+    Component: Transform
+Child: LeftHandMiddle3
+    Component: Transform
+Child: LeftHandMiddleNull
+    Component: Transform
+Child: LeftHandPinky1
+    Component: Transform
+Child: LeftHandPinky2
+    Component: Transform
+Child: LeftHandPinky3
+    Component: Transform
+Child: LeftHandPinkyNull
+    Component: Transform
+Child: LeftHandRing1
+    Component: Transform
+Child: LeftHandRing2
+    Component: Transform
+Child: LeftHandRing3
+    Component: Transform
+Child: LeftHandRingNull
+    Component: Transform
+Child: LeftHandThumb1
+    Component: Transform
+Child: LeftHandThumb2
+    Component: Transform
+Child: LeftHandThumb3
+    Component: Transform
+Child: LeftHandThumbNull
+    Component: Transform
+Child: Neck
+    Component: Transform
+Child: Head
+    Component: Transform
+    Component: Rigidbody
+    Component: SphereCollider
+    Component: CharacterJoint
+    Component: PromptScript
+Child: face
+    Component: Transform
+Child: atama_n
+    Component: Transform
+Child: cheek_Left
+    Component: Transform
+Child: cheek_Right
+    Component: Transform
+Child: eye_Left
+    Component: Transform
+Child: eye_Right
+    Component: Transform
+Child: eyelid_und1_Left
+    Component: Transform
+Child: eyelid_und1_Right
+    Component: Transform
+Child: eyelid_und2_Left
+    Component: Transform
+Child: eyelid_und2_Right
+    Component: Transform
+Child: eyelid_und_Left
+    Component: Transform
+Child: eyelid_und_Right
+    Component: Transform
+Child: eyerid1_Left
+    Component: Transform
+Child: eyerid1_Right
+    Component: Transform
+Child: eyerid2_Left
+    Component: Transform
+Child: eyerid2_Right
+    Component: Transform
+Child: eyerid_Left
+    Component: Transform
+Child: eyerid_Right
+    Component: Transform
+Child: inner_corner_of_eye_Left
+    Component: Transform
+Child: inner_corner_of_eye_Right
+    Component: Transform
+Child: jaw
+    Component: Transform
+Child: b_lip_center
+    Component: Transform
+Child: chin
+    Component: Transform
+Child: lip_u_Left
+    Component: Transform
+Child: lip_u_Right
+    Component: Transform
+Child: rip_btm_Left
+    Component: Transform
+Child: rip_btm_Right
+    Component: Transform
+Child: lip_Left
+    Component: Transform
+Child: lip_Right
+    Component: Transform
+Child: lip_t_Left
+    Component: Transform
+Child: lip_t_Right
+    Component: Transform
+Child: mayu
+    Component: Transform
+Child: eyebrow_a_Left
+    Component: Transform
+Child: eyebrow_b_Left
+    Component: Transform
+Child: temple_Left
+    Component: Transform
+Child: eyebrow_a_Right
+    Component: Transform
+Child: eyebrow_b_Right
+    Component: Transform
+Child: temple_Right
+    Component: Transform
+Child: nose
+    Component: Transform
+Child: nostrir_Left
+    Component: Transform
+Child: nostrir_Right
+    Component: Transform
+Child: tail_of_eye_Left
+    Component: Transform
+Child: tail_of_eye_Right
+    Component: Transform
+Child: u_lip_center
+    Component: Transform
+Child: lip_top_Left
+    Component: Transform
+Child: lip_top_Right
+    Component: Transform
+Child: Glasses_Null
+    Component: Transform
+Child: Head_null
+    Component: Transform
+Child: BackHair1
+    Component: Transform
+Child: BackHair2
+    Component: Transform
+Child: BackHair3
+    Component: Transform
+Child: BackHair4
+    Component: Transform
+Child: FrontHair
+    Component: Transform
+Child: LeftHair1
+    Component: Transform
+Child: LeftHair2
+    Component: Transform
+Child: LeftHair3
+    Component: Transform
+Child: RightHair1
+    Component: Transform
+Child: RightHair2
+    Component: Transform
+Child: RightHair3
+    Component: Transform
+Child: LeftEarring_Null
+    Component: Transform
+Child: RightEarring_Null
+    Component: Transform
+Child: RightBreast
+    Component: Transform
+Child: RightNipple
+    Component: Transform
+Child: RightShoulder
+    Component: Transform
+Child: RightArm
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: RightArmRoll
+    Component: Transform
+Child: RightForeArm
+    Component: Transform
+    Component: Rigidbody
+    Component: CapsuleCollider
+    Component: CharacterJoint
+Child: RightForeArm_Helper
+    Component: Transform
+Child: RightForeArmRoll
+    Component: Transform
+Child: RightHand
+    Component: Transform
+Child: RightHandIndex1
+    Component: Transform
+Child: RightHandIndex2
+    Component: Transform
+Child: RightHandIndex3
+    Component: Transform
+Child: RightHandIndexNull
+    Component: Transform
+Child: RightHanditem_Null
+    Component: Transform
+Child: RightHandMiddle1
+    Component: Transform
+Child: RightHandMiddle2
+    Component: Transform
+Child: RightHandMiddle3
+    Component: Transform
+Child: RightHandMiddleNull
+    Component: Transform
+Child: RightHandPinky1
+    Component: Transform
+Child: RightHandPinky2
+    Component: Transform
+Child: RightHandPinky3
+    Component: Transform
+Child: RightHandPinkyNull
+    Component: Transform
+Child: RightHandRing1
+    Component: Transform
+Child: RightHandRing2
+    Component: Transform
+Child: RightHandRing3
+    Component: Transform
+Child: RightHandRingNull
+    Component: Transform
+Child: RightHandThumb1
+    Component: Transform
+Child: RightHandThumb2
+    Component: Transform
+Child: RightHandThumb3
+    Component: Transform
+Child: RightHandThumbNull
+    Component: Transform

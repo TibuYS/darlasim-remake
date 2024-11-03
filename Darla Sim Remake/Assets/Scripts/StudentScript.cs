@@ -211,8 +211,10 @@ public class StudentScript : MonoBehaviour
     public void Kill()
     {
         if (GameGlobals.instance.Player.isKilling) return; //alr in progress or alr in a killing state with another student ??
+        GameGlobals.instance.Player.isKilling = true;
         studentAnimation.Stop();
         Stop(true);
+        GameGlobals.instance.PromptManager.enabled = false;
         Vector3 playerDirection = (GameGlobals.instance.Player.transform.position - transform.position).normalized;
         Vector3 characterForward = transform.forward;
         float dotProduct = Vector3.Dot(playerDirection, characterForward);
@@ -251,7 +253,9 @@ public class StudentScript : MonoBehaviour
     public void FinishKill()
     {
         Debug.Log("kill finish");
+        GameGlobals.instance.Player.isKilling = false;
         StartCoroutine(GameGlobals.instance.ChangeTimeSpeed(1f, 0.5f));
+        GameGlobals.instance.PromptManager.enabled = true;
         // SlowMotionScript.instance.SlowMotionEffect(false);
         GameGlobals.instance.Player.enabled = true;
         GameGlobals.instance.Player.currentItem.enabled = true;
@@ -269,11 +273,12 @@ public class StudentScript : MonoBehaviour
         ShowPrompt(false);
         transform.parent = GameGlobals.instance.Player.transform;
         string studentAttackAnim = "";
+        Stop(true, false);
         switch (attackType)
         {
             case AttackType.Front:
-                transform.localPosition = new Vector3(0, 0, 1.004f);
-                transform.LookAt(GameGlobals.instance.Player.transform);
+                transform.DOLocalMove(new Vector3(0, 0, 1.004f), 0.3f);
+                transform.DOLookAt(GameGlobals.instance.Player.transform.localPosition, 0.3f);
                 studentAttackAnim = attackAnimation(attackType, GameGlobals.instance.Player.currentItem.weaponType);
                 studentAnimation.Play(studentAttackAnim);
                 GameGlobals.instance.Player.playerAnimationComponent.Play("f02_knifeHighSanityA_00");
@@ -311,29 +316,80 @@ public class StudentScript : MonoBehaviour
     #region everything related to ragdolls
     public void BecomeRagdoll(bool becomeRagdoll)
     {
+        // Toggle animations and agents based on the ragdoll state
         studentAnimation.enabled = !becomeRagdoll;
+        studentAgent.enabled = !becomeRagdoll;
+
+        // Retrieve all rigidbodies and colliders in children
         Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
         Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (var rb in rigidbodies)
+
+        // If transitioning to ragdoll
+        if (becomeRagdoll)
         {
-            rb.isKinematic = !becomeRagdoll;
-        }
-        foreach (var col in colliders)
-        {
-            if (col.gameObject.name != gameObject.name)
+            foreach (var rb in rigidbodies)
             {
-                col.enabled = becomeRagdoll;
+                rb.isKinematic = false; // Make all rigidbodies non-kinematic
+                rb.useGravity = true; // Enable gravity
+            }
+
+            // Disable main collider if necessary
+            foreach (var col in colliders)
+            {
+                if (col.gameObject.name != gameObject.name) // Keep the main collider active
+                {
+                    col.enabled = true; // Enable all colliders
+                }
+            }
+
+            // Ensure main Rigidbody is not kinematic
+            Rigidbody mainRigidbody = GetComponent<Rigidbody>();
+            if (mainRigidbody != null)
+            {
+                mainRigidbody.isKinematic = false; // Make sure the main Rigidbody is non-kinematic
             }
         }
-        int objectLayer = gameObject.layer;
+        else // Transitioning out of ragdoll
+        {
+            foreach (var rb in rigidbodies)
+            {
+                rb.isKinematic = true; // Set rigidbodies to kinematic
+                rb.useGravity = false; // Disable gravity
+            }
+
+            // Enable colliders based on ragdoll state
+            foreach (var col in colliders)
+            {
+                if (col.gameObject.name != gameObject.name) // Keep the main collider active
+                {
+                    col.enabled = false; // Disable all colliders
+                }
+            }
+
+            // Reset layer collision settings
+            int objectLayer = gameObject.layer;
+            for (int i = 0; i < 32; i++)
+            {
+                if (i != objectLayer)
+                {
+                    Physics.IgnoreLayerCollision(objectLayer, i, true); // Disable collisions
+                }
+            }
+
+        }
+
+        // Handle layer collisions
+        int layer = gameObject.layer;
         for (int i = 0; i < 32; i++)
         {
-            if (i != objectLayer)
+            if (i != layer)
             {
-                Physics.IgnoreLayerCollision(objectLayer, i, !becomeRagdoll);
+                Physics.IgnoreLayerCollision(layer, i, !becomeRagdoll); // Enable or disable layer collisions
             }
         }
     }
+
+
 
     public void Drag()
     {
@@ -342,8 +398,7 @@ public class StudentScript : MonoBehaviour
         GameGlobals.instance.Player.DragBody(this);
         string limbPath = studentData.studentGender == Gender.Female ? "PelvisRoot/Hips/Spine/Spine1/Spine2/Spine3/RightShoulder/RightArm/RightArmRoll/RightForeArm" : "";
         Rigidbody limbToGrab = transform.Find(limbPath).gameObject.GetComponent<Rigidbody>();
-        BecomeRagdoll(false);
-        if(limbToGrab != null) GameGlobals.instance.Player.limbDragger.GrabLimb(limbToGrab, gameObject);
+        if(limbToGrab != null) GameGlobals.instance.Player.limbDragger.GrabLimb(limbToGrab);
     }
 
     public void Drop()
