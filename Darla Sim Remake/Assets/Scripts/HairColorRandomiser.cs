@@ -5,10 +5,12 @@ public class HairColorRandomiser : MonoBehaviour
     public SkinnedMeshRenderer hairRenderer;
     public Material originalHairMaterial;
     public Material newHairMaterial;
+    public StudentScript student;
 
     private void Start()
     {
         Color randomColor = new Color(Random.value, Random.value, Random.value);
+        student.subtitleColor = randomColor;
         Material[] materials = hairRenderer.sharedMaterials;
         for (int i = 0; i < materials.Length; i++)
         {

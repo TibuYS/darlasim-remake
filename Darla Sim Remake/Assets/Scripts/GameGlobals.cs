@@ -20,6 +20,17 @@ public class GameGlobals : MonoBehaviour
         StartCoroutine(ChangeTimeSpeed(target, dur));
     }
 
+    public GameObject FindMainParent(GameObject obj)
+    {
+        Transform currentParent = obj.transform;
+        while (currentParent.parent != null)
+        {
+            currentParent = currentParent.parent;
+        }
+        return currentParent.gameObject;
+    }
+
+
     public IEnumerator ChangeTimeSpeed(float targetTimeSpeed, float duration)
     {
         float startTimeScale = Time.timeScale;

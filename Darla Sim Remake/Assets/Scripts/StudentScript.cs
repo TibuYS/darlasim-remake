@@ -33,6 +33,7 @@ public class DestinationSpot
 public class StudentScript : MonoBehaviour
 {
     [Header("Edit in inspector")]
+    public Color subtitleColor;
     [Range(1.2f, 5)]public float pathfindingSpeed = 1.2f;
     public Transform studentLocker;
     public List<DestinationSpot> destinationSpots = new List<DestinationSpot>();
@@ -204,7 +205,13 @@ public class StudentScript : MonoBehaviour
     #region  begin conversation function
     public void Talk()
     {
-        Debug.Log("Talk");
+        if (changingShoes)
+        {
+            SubtitleManagerScript.instance.DisplaySubtitle("I'm busy right now.", 3, subtitleColor);
+            return;
+        }
+        SubtitleManagerScript.instance.DisplaySubtitle("I can't talk right now, sorry!", 4, subtitleColor);
+        SubtitleManagerScript.instance.DisplaySubtitle("[Conversation system not implemented yet!]", 4, Color.red);
     }
     #endregion
 

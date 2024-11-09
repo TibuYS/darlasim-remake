@@ -64,8 +64,7 @@ MonoBehaviour:
   materialHashCode: 757363351
   m_Version: 1.1.0
   m_SourceFontFileGUID: ff74d7e025698f84e91a41727bcbccaf
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: ff74d7e025698f84e91a41727bcbccaf,
-    type: 3}
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: ff74d7e025698f84e91a41727bcbccaf, type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
@@ -2457,8 +2456,8 @@ Material:
     - _TextureHeight: 512
     - _TextureWidth: 512
     - _UnderlayDilate: 0
-    - _UnderlayOffsetX: 0
-    - _UnderlayOffsetY: 0
+    - _UnderlayOffsetX: 0.108
+    - _UnderlayOffsetY: 0.091
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0

@@ -18,6 +18,7 @@ public class BellScript : MonoBehaviour
         SoundManager.instance.PlaySound(SoundManager.instance.getClip("Ambiences"), 1, true, SoundManager.AudioGroup.SFX);
         SoundManager.instance.PlaySound(SoundManager.instance.getClip("Schoolbell"), 1, false, SoundManager.AudioGroup.SFX);
         yield return new WaitForSeconds(SoundManager.instance.getClip("Schoolbell").length / 2);
+        SubtitleManagerScript.instance.DisplaySubtitle("Now Playing: TemporarySchooldayTrack2", 4, Color.white);
         SoundManager.instance.PlaySound(SoundManager.instance.getClip("TemporarySchooldayTrack2"), 1, true, SoundManager.AudioGroup.Music);
         Destroy(this);
     }
